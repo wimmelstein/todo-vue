@@ -1,10 +1,10 @@
 <template>
   <table class="table table-striped">
 
-    <tr v-for="item in items" :key="item.description">
+    <tr v-show="!item.done" v-for="item in items" :key="item.description">
       <td :class='item.done ? "done"  : "active"'>{{ item.description }}</td>
       <td>
-        <input type="checkbox" v-model="item.done" @change="displayItems" />
+        <input type="checkbox" v-model="item.done" />
       </td>
     </tr>
   </table>
@@ -23,18 +23,14 @@ export default {
     console.log(this.items);
   },
   methods: {
-    displayItems() {
-      console.log(this.items);
-    },
     addItem() {
         const newTask = {
             "id": this.getMaxId(),  
             "description": this.description,
             "done": false
         }
-        console.log(newTask);
         this.items = [...this.items, newTask]
-      //this.items.push({ id: this.getMaxId(), 'description': document.getElementById("input-todo").value, 'done': false });
+        this.description = ''
     },
     getMaxId() {
         const ids = this.items.map( item => item.id);
